@@ -1,5 +1,6 @@
 package com.davidju.bakingapp.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
@@ -10,5 +11,10 @@ public class Recipe {
     public List<Step> steps;
     public int servings;
     public String image;
+
+    public Recipe() {
+        ingredients = new ArrayList<>();
+        steps = new ArrayList<>();
+    }
 
 }

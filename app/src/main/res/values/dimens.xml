@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="item_recipe_horizontal_margin">14dp</dimen>
+    <dimen name="item_recipe_vertical_margin">6dp</dimen>
+    <dimen name="item_recipe_vertical_padding">20dp</dimen>
+    <dimen name="item_recipe_text_size">16sp</dimen>
+
+</resources>

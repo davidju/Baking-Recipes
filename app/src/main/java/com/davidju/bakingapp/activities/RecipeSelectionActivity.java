@@ -2,6 +2,8 @@ package com.davidju.bakingapp.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -12,33 +14,105 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.davidju.bakingapp.R;
+import com.davidju.bakingapp.adapters.RecipeSelectionAdapter;
+import com.davidju.bakingapp.models.Ingredient;
+import com.davidju.bakingapp.models.Recipe;
+import com.davidju.bakingapp.models.Step;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    RecipeSelectionAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
         ButterKnife.bind(this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecipeSelectionAdapter();
+        recyclerView.setAdapter(adapter);
+
+        fetchRecipes();
     }
 
     private void fetchRecipes() {
         final String dataUrl = "https://d17h27t6h515a5.cloudfront.net/topher/" +
                 "2017/May/59121517_baking/baking.json";
 
+        final String KEY_ID = "id";
+        final String KEY_NAME = "name";
+        final String KEY_SERVINGS = "servings";
+        final String KEY_IMAGE = "image";
+
+        final String KEY_INGREDIENTS = "ingredients";
+        final String KEY_QUANTITY = "quantity";
+        final String KEY_MEASURE = "measure";
+        final String KEY_INGREDIENT = "ingredient";
+
+        final String KEY_STEPS = "steps";
+        final String KEY_SHORT_DESCRIPTION = "shortDescription";
+        final String KEY_DESCRIPTION = "description";
+        final String KEY_VIDEO_URL = "videoUrl";
+        final String KEY_THUMBNAIL_URL = "thumbnailUrl";
+
+
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, dataUrl, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                System.out.println(response.toString());
+                List<Recipe> recipes = new ArrayList<>();
+
+                for (int i = 0; i < response.length(); i++) {
+                    Recipe recipe = new Recipe();
+                    try {
+                        JSONObject recipeJson = response.getJSONObject(i);
+                        recipe.id = recipeJson.optInt(KEY_ID);
+                        recipe.name = recipeJson.optString(KEY_NAME);
+                        recipe.servings = recipeJson.optInt(KEY_SERVINGS);
+                        recipe.image = recipeJson.optString(KEY_IMAGE);
+
+                        JSONArray ingredients = recipeJson.getJSONArray(KEY_INGREDIENTS);
+                        for (int j = 0; j < ingredients.length(); j++) {
+                            Ingredient ingredient = new Ingredient();
+                            JSONObject ingredientJson = ingredients.getJSONObject(j);
+                            ingredient.quantity = ingredientJson.optInt(KEY_QUANTITY);
+                            ingredient.measure = ingredientJson.optString(KEY_MEASURE);
+                            ingredient.ingredient = ingredientJson.optString(KEY_INGREDIENT);
+                            recipe.ingredients.add(ingredient);
+                        }
+
+                        JSONArray steps = recipeJson.getJSONArray(KEY_STEPS);
+                        for (int j = 0; j < steps.length(); j++) {
+                            Step step = new Step();
+                            JSONObject stepJson = steps.getJSONObject(j);
+                            step.id = stepJson.optInt(KEY_ID);
+                            step.shortDescription = stepJson.optString(KEY_SHORT_DESCRIPTION);
+                            step.description = stepJson.optString(KEY_DESCRIPTION);
+                            step.videoUrl = stepJson.optString(KEY_VIDEO_URL);
+                            step.thumbnailUrl = stepJson.optString(KEY_THUMBNAIL_URL);
+                            recipe.steps.add(step);
+                        }
+
+                        recipes.add(recipe);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                adapter.updateRecipes(recipes);
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -49,4 +123,5 @@ public class RecipeSelectionActivity extends AppCompatActivity {
 
         queue.add(request);
     }
+
 }
