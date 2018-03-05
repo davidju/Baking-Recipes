@@ -1,5 +1,7 @@
 package com.davidju.bakingapp.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.davidju.bakingapp.R;
+import com.davidju.bakingapp.activities.RecipeDetailsActivity;
 import com.davidju.bakingapp.models.Recipe;
 
 import java.util.ArrayList;
@@ -40,6 +43,11 @@ public class RecipeSelectionAdapter extends RecyclerView.Adapter<RecipeSelection
     public void onBindViewHolder(RecipeViewHolder viewHolder, int position) {
         final Recipe recipe = recipes.get(position);
         viewHolder.recipeName.setText(recipe.name);
+        viewHolder.recipeName.setOnClickListener((View view) -> {
+            Context context = viewHolder.recipeName.getContext();
+            Intent intent = new Intent(context, RecipeDetailsActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override
