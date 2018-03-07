@@ -78,31 +78,31 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                     Recipe recipe = new Recipe();
                     try {
                         JSONObject recipeJson = response.getJSONObject(i);
-                        recipe.id = recipeJson.optInt(KEY_ID);
-                        recipe.name = recipeJson.optString(KEY_NAME);
-                        recipe.servings = recipeJson.optInt(KEY_SERVINGS);
-                        recipe.image = recipeJson.optString(KEY_IMAGE);
+                        recipe.setId(recipeJson.optInt(KEY_ID));
+                        recipe.setName(recipeJson.optString(KEY_NAME));
+                        recipe.setServings(recipeJson.optInt(KEY_SERVINGS));
+                        recipe.setImage(recipeJson.optString(KEY_IMAGE));
 
                         JSONArray ingredients = recipeJson.getJSONArray(KEY_INGREDIENTS);
                         for (int j = 0; j < ingredients.length(); j++) {
                             Ingredient ingredient = new Ingredient();
                             JSONObject ingredientJson = ingredients.getJSONObject(j);
-                            ingredient.quantity = ingredientJson.optInt(KEY_QUANTITY);
-                            ingredient.measure = ingredientJson.optString(KEY_MEASURE);
-                            ingredient.ingredient = ingredientJson.optString(KEY_INGREDIENT);
-                            recipe.ingredients.add(ingredient);
+                            ingredient.setQuantity(ingredientJson.optInt(KEY_QUANTITY));
+                            ingredient.setMeasure(ingredientJson.optString(KEY_MEASURE));
+                            ingredient.setIngredient(ingredientJson.optString(KEY_INGREDIENT));
+                            recipe.addIngredient(ingredient);
                         }
 
                         JSONArray steps = recipeJson.getJSONArray(KEY_STEPS);
                         for (int j = 0; j < steps.length(); j++) {
                             Step step = new Step();
                             JSONObject stepJson = steps.getJSONObject(j);
-                            step.id = stepJson.optInt(KEY_ID);
-                            step.shortDescription = stepJson.optString(KEY_SHORT_DESCRIPTION);
-                            step.description = stepJson.optString(KEY_DESCRIPTION);
-                            step.videoUrl = stepJson.optString(KEY_VIDEO_URL);
-                            step.thumbnailUrl = stepJson.optString(KEY_THUMBNAIL_URL);
-                            recipe.steps.add(step);
+                            step.setId(stepJson.optInt(KEY_ID));
+                            step.setShortDescription(stepJson.optString(KEY_SHORT_DESCRIPTION));
+                            step.setDescription(stepJson.optString(KEY_DESCRIPTION));
+                            step.setVideoUrl(stepJson.optString(KEY_VIDEO_URL));
+                            step.setThumbnailUrl(stepJson.optString(KEY_THUMBNAIL_URL));
+                            recipe.addStep(step);
                         }
 
                         recipes.add(recipe);

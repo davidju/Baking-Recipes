@@ -42,10 +42,11 @@ public class RecipeSelectionAdapter extends RecyclerView.Adapter<RecipeSelection
     @Override
     public void onBindViewHolder(RecipeViewHolder viewHolder, int position) {
         final Recipe recipe = recipes.get(position);
-        viewHolder.recipeName.setText(recipe.name);
+        viewHolder.recipeName.setText(recipe.getName());
         viewHolder.recipeName.setOnClickListener((View view) -> {
             Context context = viewHolder.recipeName.getContext();
             Intent intent = new Intent(context, RecipeDetailsActivity.class);
+            intent.putExtra("recipe", recipe);
             context.startActivity(intent);
         });
     }

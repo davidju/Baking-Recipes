@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.davidju.bakingapp.R;
+import com.davidju.bakingapp.models.Recipe;
 
 public class RecipeDetailsActivity extends Activity {
 
@@ -12,5 +13,8 @@ public class RecipeDetailsActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
+
+        Recipe recipe = getIntent().getParcelableExtra("recipe");
+ 
     }
 }

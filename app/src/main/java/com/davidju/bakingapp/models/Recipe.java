@@ -45,7 +45,17 @@ public class Recipe implements Parcelable {
     private Recipe(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        in.readList(ingredients, );
+        ingredients = new ArrayList<>();
+        in.readList(ingredients, Ingredient.class.getClassLoader());
+        steps = new ArrayList<>();
+        in.readList(steps, Step.class.getClassLoader());
+        servings = in.readInt();
+        image = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public int getId() {
@@ -68,16 +78,16 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
     }
 
     public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
+    public void addStep(Step step) {
+        this.steps.add(step);
     }
 
     public int getServings() {
