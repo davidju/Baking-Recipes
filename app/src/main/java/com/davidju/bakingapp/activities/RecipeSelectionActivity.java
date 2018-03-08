@@ -64,8 +64,8 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         final String KEY_STEPS = "steps";
         final String KEY_SHORT_DESCRIPTION = "shortDescription";
         final String KEY_DESCRIPTION = "description";
-        final String KEY_VIDEO_URL = "videoUrl";
-        final String KEY_THUMBNAIL_URL = "thumbnailUrl";
+        final String KEY_VIDEO_URL = "videoURL";
+        final String KEY_THUMBNAIL_URL = "thumbnailURL";
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
