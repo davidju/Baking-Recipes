@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycler_view"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/exoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_video_vertical_margin"
+            android:layout_marginBottom="@dimen/item_video_vertical_margin"
+            android:layout_marginStart="@dimen/item_video_horizontal_margin"
+            android:layout_marginEnd="@dimen/item_video_horizontal_margin"
+            app:resize_mode="fixed_width" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/item_step_text_size"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/item_step_vertical_margin"
+            android:layout_marginBottom="@dimen/item_step_vertical_margin"
+            android:layout_marginRight="@dimen/item_step_horizontal_margin"
+            android:layout_marginLeft="@dimen/item_step_horizontal_margin"
+            android:paddingTop="@dimen/item_step_vertical_padding"
+            android:paddingBottom="@dimen/item_step_vertical_padding"
+            android:paddingRight="@dimen/item_step_horizontal_padding"
+            android:paddingLeft="@dimen/item_step_horizontal_padding" />
+
+    </LinearLayout>
+
+</ScrollView>
