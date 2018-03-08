@@ -1,6 +1,8 @@
 package com.davidju.bakingapp.adapters;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.davidju.bakingapp.R;
+import com.davidju.bakingapp.activities.RecipeStepActivity;
 import com.davidju.bakingapp.models.Ingredient;
 import com.davidju.bakingapp.models.Recipe;
 import com.davidju.bakingapp.models.Step;
@@ -51,7 +54,14 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((IngredientsViewHolder) viewHolder).ingredients.setText(builder.toString().trim());
         } else {
             Step step = steps.get(position - 1);
-            ((StepViewHolder) viewHolder).step.setText(position + ". " + step.getShortDescription());
+            String str = position + ". " + step.getShortDescription();
+            ((StepViewHolder) viewHolder).step.setText(str);
+            ((StepViewHolder) viewHolder).step.setOnClickListener((View view) -> {
+                Context context = ((StepViewHolder) viewHolder).step.getContext();
+                Intent intent = new Intent(context, RecipeStepActivity.class);
+                intent.putExtra("step", step);
+                context.startActivity(intent);
+            });
         }
     }
 

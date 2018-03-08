@@ -10,25 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.davidju.bakingapp.R;
-import com.davidju.bakingapp.adapters.RecipeDetailsAdapter;
-import com.davidju.bakingapp.models.Recipe;
+import com.davidju.bakingapp.adapters.RecipeStepAdapter;
+import com.davidju.bakingapp.models.Step;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailsFragment extends Fragment {
+public class RecipeStepFragment extends Fragment {
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
-    RecipeDetailsAdapter adapter;
+    RecipeStepAdapter adapter;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recipe_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         ButterKnife.bind(this, rootView);
 
-        Recipe recipe = getArguments().getParcelable("recipe");
+        Step step = getArguments().getParcelable("step");
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RecipeDetailsAdapter(recipe);
+        adapter = new RecipeStepAdapter(step);
         recyclerView.setAdapter(adapter);
 
         return rootView;
