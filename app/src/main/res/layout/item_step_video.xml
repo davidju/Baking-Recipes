@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<com.google.android.exoplayer2.ui.SimpleExoPlayerView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/exoplayer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="wrap_content" />
