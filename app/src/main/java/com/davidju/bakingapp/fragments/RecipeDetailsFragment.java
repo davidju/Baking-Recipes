@@ -58,6 +58,7 @@ public class RecipeDetailsFragment extends Fragment {
         super.onResume();
         if (layoutState != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(layoutState);
+            layoutState = null;
         }
     }
 
