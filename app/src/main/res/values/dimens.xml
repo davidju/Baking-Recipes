@@ -4,13 +4,16 @@
     <dimen name="item_recipe_horizontal_margin">14dp</dimen>
     <dimen name="item_recipe_vertical_margin">6dp</dimen>
     <dimen name="item_recipe_vertical_padding">20dp</dimen>
-    <dimen name="item_recipe_text_size">16sp</dimen>
+    <dimen name="item_recipe_text_size">20sp</dimen>
 
     <dimen name="item_details_horizontal_margin">14dp</dimen>
     <dimen name="item_details_vertical_margin">6dp</dimen>
-    <dimen name="item_details_horizontal_padding">10dp</dimen>
+    <dimen name="item_details_horizontal_padding">20dp</dimen>
     <dimen name="item_details_vertical_padding">20dp</dimen>
-    <dimen name="item_details_text_size">16sp</dimen>
+
+    <dimen name="item_details_header_text_size">18sp</dimen>
+    <dimen name="item_details_header_bottom_margin">7dp</dimen>
+    <dimen name="item_details_body_text_size">16sp</dimen>
 
     <dimen name="item_video_horizontal_margin">14dp</dimen>
     <dimen name="item_video_vertical_margin">6dp</dimen>

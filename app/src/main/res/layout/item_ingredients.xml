@@ -7,18 +7,34 @@
     android:layout_marginBottom="@dimen/item_details_vertical_margin"
     android:layout_marginRight="@dimen/item_details_horizontal_margin"
     android:layout_marginLeft="@dimen/item_details_horizontal_margin"
+    android:paddingTop="@dimen/item_details_vertical_padding"
+    android:paddingBottom="@dimen/item_details_vertical_padding"
+    android:paddingRight="@dimen/item_details_horizontal_padding"
+    android:paddingLeft="@dimen/item_details_horizontal_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/ingredients_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients_header"
+        android:textSize="@dimen/item_details_header_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/item_details_header_bottom_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ingredients"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/ingredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/item_details_text_size"
-        android:gravity="center"
-        android:paddingTop="@dimen/item_details_vertical_padding"
-        android:paddingBottom="@dimen/item_details_vertical_padding"
-        android:paddingRight="@dimen/item_details_horizontal_padding"
-        android:paddingLeft="@dimen/item_details_horizontal_padding"
+        android:textSize="@dimen/item_details_body_text_size"
+        android:gravity="start"
+        app:layout_constraintTop_toBottomOf="@+id/ingredients_header"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
