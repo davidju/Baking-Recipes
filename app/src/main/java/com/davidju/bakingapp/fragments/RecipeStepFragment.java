@@ -47,6 +47,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
     @BindView(R.id.exoplayer) SimpleExoPlayerView exoPlayerView;
+    @BindView(R.id.no_video_view) TextView noVideoView;
     @BindView(R.id.description) TextView description;
 
     @Nullable @Override
@@ -60,6 +61,9 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         String videoUrl = step.getVideoUrl();
         if (!videoUrl.isEmpty()) {
             initializePlayer(Uri.parse(videoUrl));
+        } else {
+            exoPlayerView.setVisibility(View.GONE);
+            noVideoView.setVisibility(View.VISIBLE);
         }
         description.setText(step.getDescription());
 
