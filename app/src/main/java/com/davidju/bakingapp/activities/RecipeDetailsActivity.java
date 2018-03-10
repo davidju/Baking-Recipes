@@ -21,13 +21,26 @@ public class RecipeDetailsActivity extends FragmentActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("recipe", recipe);
 
+        final boolean twoPane = findViewById(R.id.frame_layout) == null;
+
         if (savedInstanceState == null) {
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            RecipeDetailsFragment fragment = new RecipeDetailsFragment();
-            fragment.setArguments(bundle);
-            transaction.add(R.id.frame_layout, fragment);
-            transaction.commit();
+
+            if (!twoPane) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                RecipeDetailsFragment fragment = new RecipeDetailsFragment();
+                fragment.setArguments(bundle);
+                transaction.add(R.id.frame_layout, fragment);
+                transaction.commit();
+            } else {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                RecipeDetailsFragment fragment = new RecipeDetailsFragment();
+                fragment.setArguments(bundle);
+                transaction.add(R.id.master_list, fragment);
+                transaction.commit();
+            }
         }
     }
 }
