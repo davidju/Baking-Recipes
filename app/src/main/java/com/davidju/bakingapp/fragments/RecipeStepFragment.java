@@ -64,9 +64,9 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
 
         Step step = getArguments().getParcelable("step");
 
-        initializeMediaSession();
         String videoUrl = step.getVideoUrl();
         if (!videoUrl.isEmpty()) {
+            initializeMediaSession();
             initializePlayer(Uri.parse(videoUrl));
         } else {
             exoPlayerView.setVisibility(View.GONE);
@@ -82,7 +82,9 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_SCROLL_X_POSITION, scrollView.getScrollX());
         outState.putInt(KEY_SCROLL_Y_POSITION, scrollView.getScrollY());
-        outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
+        if (exoPlayer != null) {
+            outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
+        }
     }
 
     @Override
@@ -91,8 +93,10 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         if (savedInstanceState != null) {
             scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
                     savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
-            long playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
-            exoPlayer.seekTo(playerPosition);
+            if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
+                long playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
+                exoPlayer.seekTo(playerPosition);
+            }
         }
     }
 
@@ -139,7 +143,9 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     public void onDestroyView() {
         super.onDestroyView();
         releasePlayer();
-        mediaSession.setActive(false);
+        if (mediaSession != null) {
+            mediaSession.setActive(false);
+        }
         unbinder.unbind();
     }
 
