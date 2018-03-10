@@ -47,6 +47,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     private static final String TAG = RecipeStepFragment.class.getSimpleName();
     private static final String KEY_SCROLL_X_POSITION = "scroll_x_position";
     private static final String KEY_SCROLL_Y_POSITION = "scroll_y_position";
+    private static final String KEY_PLAYER_POSITION = "exoplayer_position";
     private Unbinder unbinder;
     private SimpleExoPlayer exoPlayer;
     private MediaSessionCompat mediaSession;
@@ -81,6 +82,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_SCROLL_X_POSITION, scrollView.getScrollX());
         outState.putInt(KEY_SCROLL_Y_POSITION, scrollView.getScrollY());
+        outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
     }
 
     @Override
@@ -89,6 +91,8 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         if (savedInstanceState != null) {
             scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
                     savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
+            long playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
+            exoPlayer.seekTo(playerPosition);
         }
     }
 
