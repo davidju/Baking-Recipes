@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Baking App</string>
+
+    <string name="ingredients_header">Ingredients</string>
+    <string name="description_header">Description</string>
+    <string name="no_video_text">No Video Available</string>
 </resources>

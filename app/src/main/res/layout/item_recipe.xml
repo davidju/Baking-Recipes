@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:textSize="@dimen/item_recipe_text_size"
+    android:textStyle="bold"
+    android:gravity="center"
     android:layout_marginTop="@dimen/item_recipe_vertical_margin"
     android:layout_marginBottom="@dimen/item_recipe_vertical_margin"
     android:layout_marginRight="@dimen/item_recipe_horizontal_margin"
     android:layout_marginLeft="@dimen/item_recipe_horizontal_margin"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <TextView
-        android:id="@+id/recipe_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/item_recipe_text_size"
-        android:gravity="center"
-        android:paddingTop="@dimen/item_recipe_vertical_padding"
-        android:paddingBottom="@dimen/item_recipe_vertical_padding"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+    android:paddingTop="@dimen/item_recipe_vertical_padding"
+    android:paddingBottom="@dimen/item_recipe_vertical_padding" />

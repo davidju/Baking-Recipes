@@ -1,6 +1,7 @@
 package com.davidju.bakingapp.activities;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,8 +32,10 @@ import butterknife.ButterKnife;
 
 public class RecipeSelectionActivity extends AppCompatActivity {
 
+    private static final String KEY_STATE = "recipe_selection_state";
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     RecipeSelectionAdapter adapter;
+    Parcelable layoutState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,20 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         fetchRecipes();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            layoutState = savedInstanceState.getParcelable(KEY_STATE);
+        }
     }
 
     private void fetchRecipes() {
@@ -69,57 +86,54 @@ public class RecipeSelectionActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, dataUrl, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                List<Recipe> recipes = new ArrayList<>();
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, dataUrl, null, (JSONArray response) -> {
+            List<Recipe> recipes = new ArrayList<>();
 
-                for (int i = 0; i < response.length(); i++) {
-                    Recipe recipe = new Recipe();
-                    try {
-                        JSONObject recipeJson = response.getJSONObject(i);
-                        recipe.setId(recipeJson.optInt(KEY_ID));
-                        recipe.setName(recipeJson.optString(KEY_NAME));
-                        recipe.setServings(recipeJson.optInt(KEY_SERVINGS));
-                        recipe.setImage(recipeJson.optString(KEY_IMAGE));
+            for (int i = 0; i < response.length(); i++) {
+                Recipe recipe = new Recipe();
+                try {
+                    JSONObject recipeJson = response.getJSONObject(i);
+                    recipe.setId(recipeJson.optInt(KEY_ID));
+                    recipe.setName(recipeJson.optString(KEY_NAME));
+                    recipe.setServings(recipeJson.optInt(KEY_SERVINGS));
+                    recipe.setImage(recipeJson.optString(KEY_IMAGE));
 
-                        JSONArray ingredients = recipeJson.getJSONArray(KEY_INGREDIENTS);
-                        for (int j = 0; j < ingredients.length(); j++) {
-                            Ingredient ingredient = new Ingredient();
-                            JSONObject ingredientJson = ingredients.getJSONObject(j);
-                            ingredient.setQuantity(ingredientJson.optInt(KEY_QUANTITY));
-                            ingredient.setMeasure(ingredientJson.optString(KEY_MEASURE));
-                            ingredient.setIngredient(ingredientJson.optString(KEY_INGREDIENT));
-                            recipe.addIngredient(ingredient);
-                        }
-
-                        JSONArray steps = recipeJson.getJSONArray(KEY_STEPS);
-                        for (int j = 0; j < steps.length(); j++) {
-                            Step step = new Step();
-                            JSONObject stepJson = steps.getJSONObject(j);
-                            step.setId(stepJson.optInt(KEY_ID));
-                            step.setShortDescription(stepJson.optString(KEY_SHORT_DESCRIPTION));
-                            step.setDescription(stepJson.optString(KEY_DESCRIPTION));
-                            step.setVideoUrl(stepJson.optString(KEY_VIDEO_URL));
-                            step.setThumbnailUrl(stepJson.optString(KEY_THUMBNAIL_URL));
-                            recipe.addStep(step);
-                        }
-
-                        recipes.add(recipe);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    JSONArray ingredients = recipeJson.getJSONArray(KEY_INGREDIENTS);
+                    for (int j = 0; j < ingredients.length(); j++) {
+                        Ingredient ingredient = new Ingredient();
+                        JSONObject ingredientJson = ingredients.getJSONObject(j);
+                        ingredient.setQuantity(ingredientJson.optInt(KEY_QUANTITY));
+                        ingredient.setMeasure(ingredientJson.optString(KEY_MEASURE));
+                        ingredient.setIngredient(ingredientJson.optString(KEY_INGREDIENT));
+                        recipe.addIngredient(ingredient);
                     }
-                }
 
-                adapter.updateRecipes(recipes);
-                adapter.notifyDataSetChanged();
+                    JSONArray steps = recipeJson.getJSONArray(KEY_STEPS);
+                    for (int j = 0; j < steps.length(); j++) {
+                        Step step = new Step();
+                        JSONObject stepJson = steps.getJSONObject(j);
+                        step.setId(stepJson.optInt(KEY_ID));
+                        step.setShortDescription(stepJson.optString(KEY_SHORT_DESCRIPTION));
+                        step.setDescription(stepJson.optString(KEY_DESCRIPTION));
+                        step.setVideoUrl(stepJson.optString(KEY_VIDEO_URL));
+                        step.setThumbnailUrl(stepJson.optString(KEY_THUMBNAIL_URL));
+                        recipe.addStep(step);
+                    }
+
+                    recipes.add(recipe);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
+            adapter.updateRecipes(recipes);
+            adapter.notifyDataSetChanged();
+            if (layoutState != null) {
+                recyclerView.getLayoutManager().onRestoreInstanceState(layoutState);
+                layoutState = null;
             }
-        });
+
+        }, (VolleyError error) -> error.printStackTrace());
 
         queue.add(request);
     }
