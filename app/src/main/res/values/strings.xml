@@ -4,4 +4,6 @@
     <string name="ingredients_header">Ingredients</string>
     <string name="description_header">Description</string>
     <string name="no_video_text">No Video Available</string>
+
+    <string name="widget_no_recipe_selection">No Recipe Selected</string>
 </resources>
