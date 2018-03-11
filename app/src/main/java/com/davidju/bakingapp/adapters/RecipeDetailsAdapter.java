@@ -1,17 +1,14 @@
 package com.davidju.bakingapp.adapters;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.davidju.bakingapp.R;
-import com.davidju.bakingapp.activities.RecipeStepActivity;
+import com.davidju.bakingapp.interfaces.OnStepClickedListener;
 import com.davidju.bakingapp.models.Ingredient;
 import com.davidju.bakingapp.models.Recipe;
 import com.davidju.bakingapp.models.Step;
@@ -23,10 +20,11 @@ import butterknife.ButterKnife;
 
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int buffer = 2;
+    public static final int buffer = 2;
     private String name;
     private List<Ingredient> ingredients;
     private List<Step> steps;
+    public OnStepClickedListener callback;
 
     public RecipeDetailsAdapter(Recipe recipe) {
         name = recipe.getName();
@@ -68,12 +66,8 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 str = (position - buffer) + ". " + str;
             }
             ((StepViewHolder) viewHolder).step.setText(str);
-            ((StepViewHolder) viewHolder).step.setOnClickListener((View view) -> {
-                Context context = ((StepViewHolder) viewHolder).step.getContext();
-                Intent intent = new Intent(context, RecipeStepActivity.class);
-                intent.putExtra("step", step);
-                context.startActivity(intent);
-            });
+            ((StepViewHolder) viewHolder).step.setOnClickListener((View v) ->
+                    callback.onStepSelected(position));
         }
     }
 

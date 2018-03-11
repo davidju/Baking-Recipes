@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@android:color/white"
         android:paddingTop="@dimen/item_step_parent_vertical_padding"
         android:paddingBottom="@dimen/item_step_parent_vertical_padding"
         android:paddingRight="@dimen/item_step_parent_horizontal_padding"
