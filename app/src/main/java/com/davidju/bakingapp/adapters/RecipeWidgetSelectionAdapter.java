@@ -16,4 +16,8 @@ public class RecipeWidgetSelectionAdapter extends RecipeSelectionAdapter {
         viewHolder.recipeName.setOnClickListener((View view) ->
             callback.onRecipeSelected(position));
     }
+
+    public Recipe getRecipe(int position) {
+        return recipes.get(position);
+    }
 }

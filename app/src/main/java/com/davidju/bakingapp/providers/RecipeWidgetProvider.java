@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.activities.RecipeSelectionActivity;
+import com.davidju.bakingapp.models.Recipe;
 
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
@@ -27,7 +28,21 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID) &&
+                intent.hasExtra("recipe")) {
+            int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+            Recipe recipe = intent.getParcelableExtra("recipe");
 
+            if (widgetId != -1) {
+                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
+                views.setTextViewText(R.id.widget_text, recipe.getName());
+                AppWidgetManager manager = AppWidgetManager.getInstance(context);
+                manager.updateAppWidget(widgetId, views);
+            }
+        }
+    }
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
