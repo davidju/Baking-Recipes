@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 
 public class RecipeSelectionAdapter extends RecyclerView.Adapter<RecipeSelectionAdapter.RecipeViewHolder> {
 
-    private List<Recipe> recipes;
+    protected List<Recipe> recipes;
 
     public RecipeSelectionAdapter() {
         recipes = new ArrayList<>();

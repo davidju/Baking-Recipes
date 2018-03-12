@@ -21,6 +21,7 @@
 
         <activity android:name=".activities.RecipeDetailsActivity" />
         <activity android:name=".activities.RecipeStepActivity" />
+        <activity android:name=".activities.RecipeWidgetSelectionActivity" />
 
         <receiver android:name=".providers.RecipeWidgetProvider">
             <intent-filter>
