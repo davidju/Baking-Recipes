@@ -1,7 +1,6 @@
 package com.davidju.bakingapp.activities;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -24,6 +23,8 @@ public class RecipeWidgetSelectionActivity extends RecipeSelectionActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_selection);
         ButterKnife.bind(this);
+
+        getSupportActionBar().setTitle(getString(R.string.widget_selection_text));
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

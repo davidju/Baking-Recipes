@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:paddingStart="@dimen/widget_horizontal_padding"
+    android:paddingEnd="@dimen/widget_horizontal_padding"
+    android:paddingTop="@dimen/widget_vertical_padding"
+    android:paddingBottom="@dimen/widget_vertical_padding">
 
     <TextView
-        android:id="@+id/widget_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/widget_recipe_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/widget_no_recipe_selection"
+        android:textSize="@dimen/widget_header_text_size"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/widget_header_vertical_margin"/>
+
+    <TextView
+        android:id="@+id/widget_recipe_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="@dimen/widget_text_size"
         android:textColor="@android:color/darker_gray"
-        android:gravity="center"/>
+        android:gravity="start"
+        android:visibility="gone"/>
 
 </LinearLayout>

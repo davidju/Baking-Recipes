@@ -5,27 +5,21 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.activities.RecipeSelectionActivity;
+import com.davidju.bakingapp.models.Ingredient;
 import com.davidju.bakingapp.models.Recipe;
+
+import java.util.List;
 
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        Intent intent = new Intent(context, RecipeSelectionActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
-        views.setOnClickPendingIntent(R.id.widget_text, pendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -36,12 +30,36 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             Recipe recipe = intent.getParcelableExtra("recipe");
 
             if (widgetId != -1) {
-                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
-                views.setTextViewText(R.id.widget_text, recipe.getName());
-                AppWidgetManager manager = AppWidgetManager.getInstance(context);
-                manager.updateAppWidget(widgetId, views);
+                String name = recipe.getName();
+                List<Ingredient> ingredients = recipe.getIngredients();
+                StringBuilder builder = new StringBuilder();
+                for (Ingredient ingredient : ingredients) {
+                    String str = "- " + ingredient.getQuantity() + " " + ingredient.getMeasure()
+                            + " " + ingredient.getIngredient() + "\n";
+                    builder.append(str);
+                }
+                String ingredientsStr = builder.toString();
+
+                updateAppWidget(context, widgetId, name, ingredientsStr);
             }
         }
+    }
+
+    private void updateAppWidget(Context context, int appWidgetId, String name, String ingredients) {
+        Intent recipeIntent = new Intent(context, RecipeSelectionActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
+
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
+        views.setOnClickPendingIntent(R.id.widget_view, pendingIntent);
+
+        views.setTextViewText(R.id.widget_recipe_name, name);
+        views.setViewVisibility(R.id.widget_recipe_name, View.VISIBLE);
+
+        views.setTextViewText(R.id.widget_recipe_ingredients, ingredients);
+        views.setViewVisibility(R.id.widget_recipe_ingredients, View.VISIBLE);
+
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        manager.updateAppWidget(appWidgetId, views);
     }
 
     @Override
