@@ -5,15 +5,19 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.activities.RecipeDetailsActivity;
 import com.davidju.bakingapp.activities.RecipeSelectionActivity;
 import com.davidju.bakingapp.models.Ingredient;
 import com.davidju.bakingapp.models.Recipe;
+import com.davidju.bakingapp.services.RecipeWidgetService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeWidgetProvider extends AppWidgetProvider {
@@ -33,22 +37,21 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             if (widgetId != -1) {
                 String name = recipe.getName();
                 List<Ingredient> ingredients = recipe.getIngredients();
-                StringBuilder builder = new StringBuilder();
+                List<String> ingredientList = new ArrayList<>();
                 for (Ingredient ingredient : ingredients) {
                     String str = "- " + ingredient.getQuantity() + " " + ingredient.getMeasure()
-                            + " " + ingredient.getIngredient() + "\n";
-                    builder.append(str);
+                            + " " + ingredient.getIngredient();
+                    ingredientList.add(str);
                 }
-                String ingredientsStr = builder.toString();
 
-                updateAppWidget(context, widgetId, name, ingredientsStr, recipe);
+                updateAppWidget(context, widgetId, name, ingredientList, recipe);
             }
         }
     }
 
-    private void updateAppWidget(Context context, int appWidgetId, String name, String ingredients,
+    private void updateAppWidget(Context context, int appWidgetId, String name, List<String> ingredients,
                                  Recipe recipe) {
-        Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
+        /*Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
         recipeIntent.putExtra("recipe", recipe);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
 
@@ -62,7 +65,24 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         views.setViewVisibility(R.id.widget_recipe_ingredients, View.VISIBLE);
 
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
-        manager.updateAppWidget(appWidgetId, views);
+        manager.updateAppWidget(appWidgetId, views);*/
+
+        Intent serviceIntent = new Intent(context, RecipeWidgetService.class);
+        serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        serviceIntent.putExtra("recipe", name);
+        serviceIntent.putStringArrayListExtra("ingredients", new ArrayList<>(ingredients));
+        serviceIntent.setData(Uri.parse(serviceIntent.toUri(Intent.URI_INTENT_SCHEME)));
+
+        RemoteViews widget = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
+        widget.setRemoteAdapter(appWidgetId, R.id.list_view, serviceIntent);
+
+        Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
+        recipeIntent.putExtra("recipe", recipe);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
+        widget.setPendingIntentTemplate(R.id.list_view, pendingIntent);
+
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        manager.updateAppWidget(appWidgetId, widget);
     }
 
     @Override
