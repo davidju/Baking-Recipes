@@ -2,6 +2,7 @@ package com.davidju.bakingapp.services;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -30,17 +31,13 @@ public class RecipeWidgetService extends RemoteViewsService {
         }
 
         @Override
-        public void onCreate() {
-        }
+        public void onCreate() {}
 
         @Override
-        public void onDataSetChanged() {
-
-        }
+        public void onDataSetChanged() {}
 
         @Override
-        public void onDestroy() {
-        }
+        public void onDestroy() {}
 
         @Override
         public int getCount() {
@@ -49,13 +46,16 @@ public class RecipeWidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
+            Intent intent = new Intent();
             RemoteViews view;
             if (position == 0) {
                 view = new RemoteViews(context.getPackageName(), R.layout.item_widget_recipe);
                 view.setTextViewText(R.id.recipe, name);
+                view.setOnClickFillInIntent(R.id.recipe, intent);
             } else {
                 view = new RemoteViews(context.getPackageName(), R.layout.item_widget_ingredient);
                 view.setTextViewText(R.id.ingredient, ingredients.get(position - 1));
+                view.setOnClickFillInIntent(R.id.ingredient, intent);
             }
 
             return view;

@@ -51,22 +51,6 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
     private void updateAppWidget(Context context, int appWidgetId, String name, List<String> ingredients,
                                  Recipe recipe) {
-        /*Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
-        recipeIntent.putExtra("recipe", recipe);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
-        views.setOnClickPendingIntent(R.id.widget_view, pendingIntent);
-
-        views.setTextViewText(R.id.widget_recipe_name, name);
-        views.setViewVisibility(R.id.widget_recipe_name, View.VISIBLE);
-
-        views.setTextViewText(R.id.widget_recipe_ingredients, ingredients);
-        views.setViewVisibility(R.id.widget_recipe_ingredients, View.VISIBLE);
-
-        AppWidgetManager manager = AppWidgetManager.getInstance(context);
-        manager.updateAppWidget(appWidgetId, views);*/
-
         Intent serviceIntent = new Intent(context, RecipeWidgetService.class);
         serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         serviceIntent.putExtra("recipe", name);
@@ -78,7 +62,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
         Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
         recipeIntent.putExtra("recipe", recipe);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         widget.setPendingIntentTemplate(R.id.list_view, pendingIntent);
 
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
