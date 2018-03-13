@@ -19,8 +19,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.RecipeDetailsActivity" />
-        <activity android:name=".activities.RecipeStepActivity" />
+        <activity android:name=".activities.RecipeDetailsActivity"
+            android:parentActivityName=".activities.RecipeSelectionActivity"/>
+        <activity android:name=".activities.RecipeStepActivity"
+            android:parentActivityName=".activities.RecipeDetailsActivity"/>
         <activity android:name=".activities.RecipeWidgetSelectionActivity" />
 
         <receiver android:name=".providers.RecipeWidgetProvider">

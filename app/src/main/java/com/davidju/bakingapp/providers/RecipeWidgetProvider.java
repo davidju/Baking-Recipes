@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.davidju.bakingapp.R;
+import com.davidju.bakingapp.activities.RecipeDetailsActivity;
 import com.davidju.bakingapp.activities.RecipeSelectionActivity;
 import com.davidju.bakingapp.models.Ingredient;
 import com.davidju.bakingapp.models.Recipe;
@@ -40,13 +41,15 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
                 }
                 String ingredientsStr = builder.toString();
 
-                updateAppWidget(context, widgetId, name, ingredientsStr);
+                updateAppWidget(context, widgetId, name, ingredientsStr, recipe);
             }
         }
     }
 
-    private void updateAppWidget(Context context, int appWidgetId, String name, String ingredients) {
-        Intent recipeIntent = new Intent(context, RecipeSelectionActivity.class);
+    private void updateAppWidget(Context context, int appWidgetId, String name, String ingredients,
+                                 Recipe recipe) {
+        Intent recipeIntent = new Intent(context, RecipeDetailsActivity.class);
+        recipeIntent.putExtra("recipe", recipe);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, recipeIntent, 0);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_recipe);
