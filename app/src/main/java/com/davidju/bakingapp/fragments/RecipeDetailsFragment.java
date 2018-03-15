@@ -71,6 +71,7 @@ public class RecipeDetailsFragment extends Fragment implements OnStepClickedList
             startActivity(intent);
         } else {
             callback.onStepSelected(position);
+            adapter.setSelectedBorder(position);
         }
     }
 

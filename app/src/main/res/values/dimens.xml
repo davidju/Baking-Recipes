@@ -7,6 +7,7 @@
     <dimen name="item_recipe_text_size">20sp</dimen>
 
     <dimen name="layout_recipe_two_pane_padding">5dp</dimen>
+    <dimen name="layout_background_border_width">2dp</dimen>
 
     <dimen name="item_details_horizontal_margin">14dp</dimen>
     <dimen name="item_details_vertical_margin">6dp</dimen>

@@ -1,5 +1,6 @@
 package com.davidju.bakingapp.adapters;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int buffer = 2;
+    private int selectedPosition = -1;
     private String name;
     private List<Ingredient> ingredients;
     private List<Step> steps;
@@ -62,14 +64,20 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             ((IngredientsViewHolder) viewHolder).ingredients.setText(builder.toString().trim());
         } else {
+            TextView stepView = ((StepViewHolder) viewHolder).step;
+            if (position == selectedPosition) {
+                stepView.setBackground(ContextCompat.getDrawable(stepView.getContext(), R.drawable.border_primary_background_white));
+            } else {
+                stepView.setBackgroundColor(ContextCompat.getColor(stepView.getContext(), android.R.color.white));
+            }
+
             Step step = steps.get(position - buffer);
             String str = step.getShortDescription();
             if (position > buffer) {
                 str = (position - buffer) + ". " + str;
             }
-            ((StepViewHolder) viewHolder).step.setText(str);
-            ((StepViewHolder) viewHolder).step.setOnClickListener((View v) ->
-                    callback.onStepSelected(position));
+            stepView.setText(str);
+            stepView.setOnClickListener((View v) -> callback.onStepSelected(position));
         }
     }
 
@@ -88,6 +96,11 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else { // Recipe steps
             return 2;
         }
+    }
+
+    public void setSelectedBorder(int position) {
+        selectedPosition = position;
+        notifyDataSetChanged();
     }
 
     class RecipeViewHolder extends RecyclerView.ViewHolder {
