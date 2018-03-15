@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.adapters.RecipeDetailsAdapter;
+import com.davidju.bakingapp.fragments.RecipeDetailsEmptyFragment;
 import com.davidju.bakingapp.fragments.RecipeDetailsFragment;
 import com.davidju.bakingapp.fragments.RecipeStepFragment;
 import com.davidju.bakingapp.interfaces.OnStepClickedListener;
@@ -51,6 +52,11 @@ public class RecipeDetailsActivity extends FragmentActivity implements OnStepCli
                 RecipeDetailsFragment fragment = new RecipeDetailsFragment();
                 fragment.setArguments(bundle);
                 transaction.add(R.id.master_list, fragment);
+                transaction.commit();
+
+                transaction = manager.beginTransaction();
+                RecipeDetailsEmptyFragment emptyFragment = new RecipeDetailsEmptyFragment();
+                transaction.add(R.id.detail_list, emptyFragment);
                 transaction.commit();
             }
         }
