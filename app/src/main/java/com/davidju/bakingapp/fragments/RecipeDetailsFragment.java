@@ -29,10 +29,12 @@ import butterknife.Unbinder;
 public class RecipeDetailsFragment extends Fragment implements OnStepClickedListener {
 
     private static final String KEY_STATE = "recipe_details_state";
+    private static final String KEY_SELECTED_POSITION = "selected_position";
     private Unbinder unbinder;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     RecipeDetailsAdapter adapter;
     Parcelable layoutState;
+    int selectedPosition;
     OnStepClickedListener callback;
     Recipe recipe;
     boolean twoPane;
@@ -79,6 +81,7 @@ public class RecipeDetailsFragment extends Fragment implements OnStepClickedList
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+        outState.putInt(KEY_SELECTED_POSITION, adapter.getSelectedPosition());
     }
 
     @Override
@@ -86,6 +89,7 @@ public class RecipeDetailsFragment extends Fragment implements OnStepClickedList
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             layoutState = savedInstanceState.getParcelable(KEY_STATE);
+            selectedPosition = savedInstanceState.getInt(KEY_SELECTED_POSITION);
         }
     }
 
@@ -95,6 +99,7 @@ public class RecipeDetailsFragment extends Fragment implements OnStepClickedList
         if (layoutState != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(layoutState);
             layoutState = null;
+            adapter.setSelectedBorder(selectedPosition);
         }
     }
 
