@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int buffer = 2;
+    public static final int buffer = 3;
     private int selectedPosition = -1;
     private String name;
     private List<Ingredient> ingredients;
@@ -40,11 +40,14 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == 0) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_details, parent, false);
             return new RecipeViewHolder(view);
         } else if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ingredients, parent, false);
             return new IngredientsViewHolder(view);
+        } else if (viewType == 2) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_instructions, parent, false);
+            return new InstructionsViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_step, parent, false);
             return new StepViewHolder(view);
@@ -63,7 +66,7 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 builder.append(str);
             }
             ((IngredientsViewHolder) viewHolder).ingredients.setText(builder.toString().trim());
-        } else {
+        } else if (viewHolder.getItemViewType() >= 3) {
             TextView stepView = ((StepViewHolder) viewHolder).step;
             if (position == selectedPosition) {
                 stepView.setBackground(ContextCompat.getDrawable(stepView.getContext(), R.drawable.border_primary_background_white));
@@ -89,12 +92,10 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) { // Recipe name
-            return 0;
-        } else if (position == 1) { // Recipe ingredients
-            return 1;
-        } else { // Recipe steps
-            return 2;
+        if (position < buffer) {
+            return position;
+        } else {
+            return buffer;
         }
     }
 
@@ -114,6 +115,14 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     class IngredientsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ingredients) TextView ingredients;
         IngredientsViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    class InstructionsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.instructions) TextView instructions;
+        InstructionsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
