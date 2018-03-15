@@ -1,6 +1,5 @@
 package com.davidju.bakingapp.adapters;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for RecyclerView that displays details for a selected recipe.
+ */
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int buffer = 2;
@@ -79,19 +81,17 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (position == 0) { // Recipe name
             return 0;
-        } else if (position == 1) {
+        } else if (position == 1) { // Recipe ingredients
             return 1;
-        } else {
+        } else { // Recipe steps
             return 2;
         }
     }
 
     class RecipeViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.recipe_name) TextView recipeName;
-
         RecipeViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -99,9 +99,7 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     class IngredientsViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ingredients) TextView ingredients;
-
         IngredientsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -109,9 +107,7 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     class StepViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.step) TextView step;
-
         StepViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

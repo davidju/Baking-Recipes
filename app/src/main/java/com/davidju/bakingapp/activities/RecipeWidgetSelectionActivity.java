@@ -14,6 +14,9 @@ import com.davidju.bakingapp.providers.RecipeWidgetProvider;
 
 import butterknife.ButterKnife;
 
+/**
+ * Class that controls the view in which the user selects the recipe to display on the widget.
+ */
 public class RecipeWidgetSelectionActivity extends RecipeSelectionActivity implements OnRecipeSelectedListener {
 
     private int widgetId;
@@ -46,6 +49,7 @@ public class RecipeWidgetSelectionActivity extends RecipeSelectionActivity imple
         fetchRecipes();
     }
 
+    /* Callback for when a recipe is selected. */
     @Override
     public void onRecipeSelected(int position) {
         Intent updateIntent = new Intent(this, RecipeWidgetProvider.class);

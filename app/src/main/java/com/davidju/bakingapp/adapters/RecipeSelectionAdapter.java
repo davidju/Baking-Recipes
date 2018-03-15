@@ -18,9 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for RecyclerView that displays list of available recipes to select from.
+ */
 public class RecipeSelectionAdapter extends RecyclerView.Adapter<RecipeSelectionAdapter.RecipeViewHolder> {
 
-    protected List<Recipe> recipes;
+    List<Recipe> recipes;
 
     public RecipeSelectionAdapter() {
         recipes = new ArrayList<>();
@@ -35,8 +38,7 @@ public class RecipeSelectionAdapter extends RecyclerView.Adapter<RecipeSelection
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
-        RecipeViewHolder viewHolder = new RecipeViewHolder(view);
-        return viewHolder;
+        return new RecipeViewHolder(view);
     }
 
     @Override

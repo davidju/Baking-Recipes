@@ -5,6 +5,9 @@ import android.support.test.espresso.IdlingResource;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Class used to manage status of idling resources in app for UI testing.
+ */
 public class AppIdlingResource implements IdlingResource {
 
     @Nullable private volatile ResourceCallback callback;

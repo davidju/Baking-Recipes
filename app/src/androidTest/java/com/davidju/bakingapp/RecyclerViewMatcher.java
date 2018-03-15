@@ -14,8 +14,7 @@ import org.hamcrest.TypeSafeMatcher;
  * This class was taken from https://github.com/dannyroa/espresso-samples/blob/master/RecyclerView/app
  * /src/androidTest/java/com/dannyroa/espresso_samples/recyclerview/RecyclerViewMatcher.java
  *
- * Discovered while searching for a better way to test RecyclerView using Espresso, as recommended by
- * the following StackOverflow post: https://stackoverflow.com/questions/31394569/how-to-assert-inside-a-recyclerview-in-espresso
+ * Relevant StackOverflow post: https://stackoverflow.com/questions/31394569/how-to-assert-inside-a-recyclerview-in-espresso
  */
 public class RecyclerViewMatcher {
     private final int recyclerViewId;

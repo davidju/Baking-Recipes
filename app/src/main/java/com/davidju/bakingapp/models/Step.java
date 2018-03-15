@@ -3,6 +3,9 @@ package com.davidju.bakingapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Model class that represents an instruction in creating a recipe.
+ */
 public class Step implements Parcelable {
 
     private int id;

@@ -11,12 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
@@ -37,6 +34,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Class that controls the main view that displays list of available recipes for the user to view.
+ */
 public class RecipeSelectionActivity extends AppCompatActivity {
 
     protected static final String KEY_STATE = "recipe_selection_state";
@@ -92,6 +92,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         }
     }
 
+    /* Fetches recipes from network source and parses the JSON result to models */
     protected void fetchRecipes() {
         final String dataUrl = "https://d17h27t6h515a5.cloudfront.net/topher/" +
                 "2017/May/59121517_baking/baking.json";
@@ -119,12 +120,14 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             for (int i = 0; i < response.length(); i++) {
                 Recipe recipe = new Recipe();
                 try {
+                    // Parse recipe info
                     JSONObject recipeJson = response.getJSONObject(i);
                     recipe.setId(recipeJson.optInt(KEY_ID));
                     recipe.setName(recipeJson.optString(KEY_NAME));
                     recipe.setServings(recipeJson.optInt(KEY_SERVINGS));
                     recipe.setImage(recipeJson.optString(KEY_IMAGE));
 
+                    // Parse ingredient info
                     JSONArray ingredients = recipeJson.getJSONArray(KEY_INGREDIENTS);
                     for (int j = 0; j < ingredients.length(); j++) {
                         Ingredient ingredient = new Ingredient();
@@ -135,6 +138,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                         recipe.addIngredient(ingredient);
                     }
 
+                    // Parse recipe instruction info
                     JSONArray steps = recipeJson.getJSONArray(KEY_STEPS);
                     for (int j = 0; j < steps.length(); j++) {
                         Step step = new Step();
@@ -164,7 +168,7 @@ public class RecipeSelectionActivity extends AppCompatActivity {
                 idlingResource.setIdleState(true);
             }
 
-        }, (VolleyError error) -> error.printStackTrace());
+        }, VolleyError::printStackTrace);
 
         queue.add(request);
     }

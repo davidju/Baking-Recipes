@@ -1,8 +1,6 @@
 package com.davidju.bakingapp.fragments;
 
 import android.arch.lifecycle.Lifecycle;
-import android.media.session.MediaSession;
-import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +40,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * Fragment that controls the view in which the details for a particular recipe' step is displayed.
+ */
 public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private static final String TAG = RecipeStepFragment.class.getSimpleName();
@@ -184,7 +185,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onPositionDiscontinuity() {}
 
-    /* Media Session callbacks for when external clients control the player */
+    /* Media Session callbacks for when external clients control the player. */
     private class MediaSessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {

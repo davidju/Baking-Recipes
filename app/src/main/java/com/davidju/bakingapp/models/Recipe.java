@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model class that represents a recipe.
+ */
 public class Recipe implements Parcelable {
 
     private int id;
