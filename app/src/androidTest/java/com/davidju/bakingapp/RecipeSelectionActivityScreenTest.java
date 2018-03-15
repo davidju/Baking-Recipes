@@ -44,6 +44,38 @@ public class RecipeSelectionActivityScreenTest {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(3)).check(matches(withText("Cheesecake")));
     }
 
+    @Test
+    public void checkRecyclerViewClickActionOne() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Nutella Pie")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Prep the cookie crust.")));
+    }
+
+    @Test
+    public void checkRecyclerViewClickActionTwo() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Brownies")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Melt butter and bittersweet chocolate.")));
+    }
+
+    @Test
+    public void checkRecyclerViewClickActionThree() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Yellow Cake")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Combine dry ingredients.")));
+    }
+
+    @Test
+    public void checkRecyclerViewClickActionFour() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Cheesecake")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep.")));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Prep the cookie crust.")));
+    }
+
     @After
     public void unregisterIdlingResource() {
         if (idlingResource != null) {
