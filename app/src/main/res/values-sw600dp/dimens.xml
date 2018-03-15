@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="item_recipe_horizontal_margin">5dp</dimen>
+    <dimen name="item_details_horizontal_margin">5dp</dimen>
+
+</resources>

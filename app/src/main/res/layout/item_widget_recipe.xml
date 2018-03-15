@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    android:textStyle="bold"
+    android:textSize="@dimen/widget_header_text_size"
+    android:textColor="@android:color/white"
+    android:paddingTop="@dimen/widget_header_vertical_padding"
+    android:paddingBottom="@dimen/widget_header_vertical_padding" />

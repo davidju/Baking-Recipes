@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/step"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/item_step_text_size"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:layout_marginTop="@dimen/item_details_vertical_margin"
+    android:layout_marginBottom="@dimen/item_details_vertical_margin"
+    android:layout_marginRight="@dimen/item_details_horizontal_margin"
+    android:layout_marginLeft="@dimen/item_details_horizontal_margin"
+    android:paddingTop="@dimen/item_details_vertical_padding"
+    android:paddingBottom="@dimen/item_details_vertical_padding"
+    android:paddingRight="@dimen/item_details_horizontal_padding"
+    android:paddingLeft="@dimen/item_details_horizontal_padding" />
