@@ -104,6 +104,10 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged();
     }
 
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
     class RecipeViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.recipe_name) TextView recipeName;
         RecipeViewHolder(View view) {
