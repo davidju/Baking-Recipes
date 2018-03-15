@@ -3,4 +3,8 @@
     android:id="@+id/ingredient"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@android:color/darker_gray"/>
+    android:textSize="@dimen/widget_text_size"
+    android:textColor="@android:color/darker_gray"
+    android:paddingStart="@dimen/widget_horizontal_padding"
+    android:paddingEnd="@dimen/widget_horizontal_padding"
+    android:paddingTop="@dimen/widget_vertical_padding" />

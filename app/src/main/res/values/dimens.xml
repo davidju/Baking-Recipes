@@ -30,8 +30,8 @@
 
     <dimen name="widget_text_size">12sp</dimen>
     <dimen name="widget_header_text_size">18sp</dimen>
-    <dimen name="widget_header_vertical_padding">3dp</dimen>
+    <dimen name="widget_header_vertical_padding">7dp</dimen>
     <dimen name="widget_horizontal_padding">10dp</dimen>
-    <dimen name="widget_vertical_padding">8dp</dimen>
+    <dimen name="widget_vertical_padding">7dp</dimen>
 
 </resources>
