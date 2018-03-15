@@ -9,12 +9,17 @@ import com.davidju.bakingapp.R;
 
 import java.util.List;
 
+/**
+ * Service used to update the widget's ListView with the appropriate content.
+ */
 public class RecipeWidgetService extends RemoteViewsService {
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new RecipeWidgetViewsFactory(this.getApplicationContext(), intent);
     }
 
+    /* Class that serves as an adapter for the widget's ListView. */
     class RecipeWidgetViewsFactory implements RemoteViewsFactory {
 
         Context context;

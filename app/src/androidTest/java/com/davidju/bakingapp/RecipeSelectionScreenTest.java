@@ -19,6 +19,9 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+/**
+ * Class that contains UI tests for the recipe selection screen and actions performed on the screen.
+ */
 @RunWith(AndroidJUnit4.class)
 public class RecipeSelectionScreenTest {
 
@@ -36,6 +39,7 @@ public class RecipeSelectionScreenTest {
         IdlingRegistry.getInstance().register(idlingResource);
     }
 
+    /* Verifies that recipes are loaded correctly from network. */
     @Test
     public void checkRecyclerViewRecipeContent() {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Nutella Pie")));
@@ -44,6 +48,7 @@ public class RecipeSelectionScreenTest {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(3)).check(matches(withText("Cheesecake")));
     }
 
+    /* Verifies that selecting the Nutella Pie recipe leads to the correct view containing the expected data. */
     @Test
     public void checkRecyclerViewClickAction_NutellaPie() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -52,6 +57,7 @@ public class RecipeSelectionScreenTest {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Prep the cookie crust.")));
     }
 
+    /* Verifies that selecting the Brownies recipe leads to the correct view containing the expected data. */
     @Test
     public void checkRecyclerViewClickAction_Brownies() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
@@ -60,6 +66,7 @@ public class RecipeSelectionScreenTest {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Melt butter and bittersweet chocolate.")));
     }
 
+    /* Verifies that selecting the Yellow Cake recipe leads to the correct view containing the expected data. */
     @Test
     public void checkRecyclerViewClickAction_YellowCake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
@@ -68,6 +75,7 @@ public class RecipeSelectionScreenTest {
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Combine dry ingredients.")));
     }
 
+    /* Verifies that selecting the Cheesecake recipe leads to the correct view containing the expected data. */
     @Test
     public void checkRecyclerViewClickAction_Cheesecake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));

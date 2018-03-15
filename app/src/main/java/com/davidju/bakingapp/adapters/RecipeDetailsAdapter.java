@@ -1,6 +1,6 @@
 package com.davidju.bakingapp.adapters;
 
-
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +18,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Adapter for RecyclerView that displays details for a selected recipe.
+ */
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int buffer = 2;
+    public static final int buffer = 3;
+    private int selectedPosition = -1;
     private String name;
     private List<Ingredient> ingredients;
     private List<Step> steps;
@@ -36,11 +40,14 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == 0) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_details, parent, false);
             return new RecipeViewHolder(view);
         } else if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ingredients, parent, false);
             return new IngredientsViewHolder(view);
+        } else if (viewType == 2) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_instructions, parent, false);
+            return new InstructionsViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_step, parent, false);
             return new StepViewHolder(view);
@@ -59,15 +66,21 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 builder.append(str);
             }
             ((IngredientsViewHolder) viewHolder).ingredients.setText(builder.toString().trim());
-        } else {
+        } else if (viewHolder.getItemViewType() >= 3) {
+            TextView stepView = ((StepViewHolder) viewHolder).step;
+            if (position == selectedPosition) {
+                stepView.setBackground(ContextCompat.getDrawable(stepView.getContext(), R.drawable.border_primary_background_white));
+            } else {
+                stepView.setBackgroundColor(ContextCompat.getColor(stepView.getContext(), android.R.color.white));
+            }
+
             Step step = steps.get(position - buffer);
             String str = step.getShortDescription();
             if (position > buffer) {
                 str = (position - buffer) + ". " + str;
             }
-            ((StepViewHolder) viewHolder).step.setText(str);
-            ((StepViewHolder) viewHolder).step.setOnClickListener((View v) ->
-                    callback.onStepSelected(position));
+            stepView.setText(str);
+            stepView.setOnClickListener((View v) -> callback.onStepSelected(position));
         }
     }
 
@@ -79,19 +92,20 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else if (position == 1) {
-            return 1;
+        if (position < buffer) {
+            return position;
         } else {
-            return 2;
+            return buffer;
         }
     }
 
+    public void setSelectedBorder(int position) {
+        selectedPosition = position;
+        notifyDataSetChanged();
+    }
+
     class RecipeViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.recipe_name) TextView recipeName;
-
         RecipeViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -99,19 +113,23 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     class IngredientsViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ingredients) TextView ingredients;
-
         IngredientsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
 
+    class InstructionsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.instructions) TextView instructions;
+        InstructionsViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
     class StepViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.step) TextView step;
-
         StepViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

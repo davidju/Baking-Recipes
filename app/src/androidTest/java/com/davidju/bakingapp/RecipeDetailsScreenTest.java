@@ -17,6 +17,11 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+/**
+ * Class that contains the UI tests for actions performed on the recipe step selection screen.
+ * Asserts that selecting a recipe step leads to the correct recipe step description view by asserting that
+ * the step description matches the expected text.
+ */
 public class RecipeDetailsScreenTest {
 
     @Rule

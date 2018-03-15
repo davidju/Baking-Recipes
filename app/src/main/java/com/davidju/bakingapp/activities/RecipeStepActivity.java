@@ -1,6 +1,5 @@
 package com.davidju.bakingapp.activities;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +10,9 @@ import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.fragments.RecipeStepFragment;
 import com.davidju.bakingapp.models.Step;
 
+/**
+ * Class that inflates the Fragment that displays a recipe step instruction.
+ */
 public class RecipeStepActivity extends FragmentActivity {
 
     @Override

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="@string/recipe_details_no_selection"
+    android:textSize="@dimen/empty_fragment_text_size"
+    android:gravity="center"
+    android:background="@color/faded_background_blue"
+    android:paddingStart="@dimen/empty_fragment_horizontal_padding"
+    android:paddingEnd="@dimen/empty_fragment_horizontal_padding" />
+

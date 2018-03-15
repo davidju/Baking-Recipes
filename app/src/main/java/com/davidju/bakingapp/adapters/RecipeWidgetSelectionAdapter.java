@@ -5,6 +5,9 @@ import android.view.View;
 import com.davidju.bakingapp.interfaces.OnRecipeSelectedListener;
 import com.davidju.bakingapp.models.Recipe;
 
+/**
+ * Adapter for RecyclerView that displays list of recipes available to display on the app widget.
+ */
 public class RecipeWidgetSelectionAdapter extends RecipeSelectionAdapter {
 
     public OnRecipeSelectedListener callback;

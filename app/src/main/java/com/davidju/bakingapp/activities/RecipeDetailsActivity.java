@@ -9,14 +9,18 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.adapters.RecipeDetailsAdapter;
+import com.davidju.bakingapp.fragments.RecipeDetailsEmptyFragment;
 import com.davidju.bakingapp.fragments.RecipeDetailsFragment;
 import com.davidju.bakingapp.fragments.RecipeStepFragment;
 import com.davidju.bakingapp.interfaces.OnStepClickedListener;
 import com.davidju.bakingapp.models.Recipe;
 import com.davidju.bakingapp.models.Step;
 
-public class RecipeDetailsActivity extends FragmentActivity
-        implements OnStepClickedListener {
+/**
+ * Class that inflates the Fragment that displays recipe details (and selected recipe step instruction
+ * if layout is two pane).
+ */
+public class RecipeDetailsActivity extends FragmentActivity implements OnStepClickedListener {
 
     Recipe recipe;
 
@@ -49,10 +53,16 @@ public class RecipeDetailsActivity extends FragmentActivity
                 fragment.setArguments(bundle);
                 transaction.add(R.id.master_list, fragment);
                 transaction.commit();
+
+                transaction = manager.beginTransaction();
+                RecipeDetailsEmptyFragment emptyFragment = new RecipeDetailsEmptyFragment();
+                transaction.add(R.id.detail_list, emptyFragment);
+                transaction.commit();
             }
         }
     }
 
+    /* Callback for when a recipe step is selected (for two pane layout only) */
     @Override
     public void onStepSelected(int position) {
         Step step = recipe.getSteps().get(position - RecipeDetailsAdapter.buffer);
@@ -67,6 +77,7 @@ public class RecipeDetailsActivity extends FragmentActivity
         transaction.commit();
     }
 
+    /* Return to main recipe selection view (for when this activity is entered via widget) */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, RecipeSelectionActivity.class);

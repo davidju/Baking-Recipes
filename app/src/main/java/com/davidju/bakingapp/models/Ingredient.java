@@ -3,6 +3,9 @@ package com.davidju.bakingapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Model class that represents an ingredient needed for a recipe.
+ */
 public class Ingredient implements Parcelable {
 
     private int quantity;

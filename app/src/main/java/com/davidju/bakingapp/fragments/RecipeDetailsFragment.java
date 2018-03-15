@@ -23,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * Fragment that controls the view in which a recipe's details (ingredients and steps) are displayed.
+ */
 public class RecipeDetailsFragment extends Fragment implements OnStepClickedListener {
 
     private static final String KEY_STATE = "recipe_details_state";
@@ -68,6 +71,7 @@ public class RecipeDetailsFragment extends Fragment implements OnStepClickedList
             startActivity(intent);
         } else {
             callback.onStepSelected(position);
+            adapter.setSelectedBorder(position);
         }
     }
 

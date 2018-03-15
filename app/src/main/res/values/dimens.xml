@@ -4,9 +4,11 @@
     <dimen name="item_recipe_horizontal_margin">14dp</dimen>
     <dimen name="item_recipe_vertical_margin">6dp</dimen>
     <dimen name="item_recipe_vertical_padding">20dp</dimen>
+    <dimen name="item_recipe_header_vertical_padding">12dp</dimen>
     <dimen name="item_recipe_text_size">20sp</dimen>
 
     <dimen name="layout_recipe_two_pane_padding">5dp</dimen>
+    <dimen name="layout_background_border_width">2dp</dimen>
 
     <dimen name="item_details_horizontal_margin">14dp</dimen>
     <dimen name="item_details_vertical_margin">6dp</dimen>
@@ -30,8 +32,11 @@
 
     <dimen name="widget_text_size">12sp</dimen>
     <dimen name="widget_header_text_size">18sp</dimen>
-    <dimen name="widget_header_vertical_padding">3dp</dimen>
+    <dimen name="widget_header_vertical_padding">7dp</dimen>
     <dimen name="widget_horizontal_padding">10dp</dimen>
-    <dimen name="widget_vertical_padding">8dp</dimen>
+    <dimen name="widget_vertical_padding">7dp</dimen>
+
+    <dimen name="empty_fragment_text_size">16sp</dimen>
+    <dimen name="empty_fragment_horizontal_padding">10dp</dimen>
 
 </resources>
