@@ -3,6 +3,10 @@ package com.davidju.bakingapp.activities;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.davidju.bakingapp.AppIdlingResource;
 import com.davidju.bakingapp.R;
 import com.davidju.bakingapp.adapters.RecipeSelectionAdapter;
 import com.davidju.bakingapp.models.Ingredient;
@@ -38,6 +43,16 @@ public class RecipeSelectionActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     RecipeSelectionAdapter adapter;
     Parcelable layoutState;
+    @Nullable private AppIdlingResource idlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (idlingResource == null) {
+            idlingResource = new AppIdlingResource();
+        }
+        return idlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,11 @@ public class RecipeSelectionActivity extends AppCompatActivity {
 
         adapter = new RecipeSelectionAdapter();
         recyclerView.setAdapter(adapter);
+
+        getIdlingResource();
+        if (idlingResource != null) {
+            idlingResource.setIdleState(false);
+        }
 
         fetchRecipes();
     }
@@ -91,7 +111,6 @@ public class RecipeSelectionActivity extends AppCompatActivity {
         final String KEY_DESCRIPTION = "description";
         final String KEY_VIDEO_URL = "videoURL";
         final String KEY_THUMBNAIL_URL = "thumbnailURL";
-
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, dataUrl, null, (JSONArray response) -> {
@@ -139,6 +158,10 @@ public class RecipeSelectionActivity extends AppCompatActivity {
             if (layoutState != null) {
                 recyclerView.getLayoutManager().onRestoreInstanceState(layoutState);
                 layoutState = null;
+            }
+
+            if (idlingResource != null) {
+                idlingResource.setIdleState(true);
             }
 
         }, (VolleyError error) -> error.printStackTrace());
