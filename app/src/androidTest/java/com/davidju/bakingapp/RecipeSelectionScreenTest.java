@@ -20,7 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class RecipeSelectionActivityScreenTest {
+public class RecipeSelectionScreenTest {
 
     @Rule
     public ActivityTestRule<RecipeSelectionActivity> activityRule = new ActivityTestRule<>(RecipeSelectionActivity.class);
@@ -45,7 +45,7 @@ public class RecipeSelectionActivityScreenTest {
     }
 
     @Test
-    public void checkRecyclerViewClickActionOne() {
+    public void checkRecyclerViewClickAction_NutellaPie() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Nutella Pie")));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
@@ -53,7 +53,7 @@ public class RecipeSelectionActivityScreenTest {
     }
 
     @Test
-    public void checkRecyclerViewClickActionTwo() {
+    public void checkRecyclerViewClickAction_Brownies() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Brownies")));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
@@ -61,7 +61,7 @@ public class RecipeSelectionActivityScreenTest {
     }
 
     @Test
-    public void checkRecyclerViewClickActionThree() {
+    public void checkRecyclerViewClickAction_YellowCake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Yellow Cake")));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
@@ -69,7 +69,7 @@ public class RecipeSelectionActivityScreenTest {
     }
 
     @Test
-    public void checkRecyclerViewClickActionFour() {
+    public void checkRecyclerViewClickAction_Cheesecake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Cheesecake")));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep.")));
