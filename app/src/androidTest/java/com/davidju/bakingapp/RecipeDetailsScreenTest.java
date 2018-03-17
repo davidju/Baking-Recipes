@@ -37,56 +37,56 @@ public class RecipeDetailsScreenTest {
     @Test
     public void checkRecyclerViewClickAction_NutellaPieStepOne() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("1. Preheat the oven to 350\u00B0F. Butter a 9\" deep dish pie pan.")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_NutellaPieStepThree() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("3. Press the cookie crumb mixture into the prepared pie pan and bake for 12 minutes. Let crust cool to room temperature.")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_BrowniesStepThree() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("3. Mix both sugars into the melted chocolate in a large mixing bowl until mixture is smooth and uniform.")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_BrowniesStepFour() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
-        Espresso.onView(withId(R.id.description)).check(matches(withText("4. Sift together the flour, cocoa, and salt in a small bowl and whisk until mixture is uniform and no clumps remain.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(7, click()));
+        Espresso.onView(withId(R.id.description)).check(matches(withText("4. Sift together the flour, cocoa, and salt in a small bowl and whisk until mixture is uniform and no clumps remain. ")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_YellowCakeStepThree() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("3. Lightly beat together the egg yolks, 1 tablespoon of vanilla, and 80 grams (1/3 cup) of the milk in a small bowl.")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_YellowCakeStepFive() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(7, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(8, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("5. Scrape down the sides of the bowl. Add the egg mixture to the batter in three batches, beating for 20 seconds each time and then scraping down the sides.")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_CheesecakeStepOne() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
-        Espresso.onView(withId(R.id.description)).check(matches(withText("1. Preheat the oven to 350\u00B0F. Grease the bottom of a 9-inch round springform pan with butter.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        Espresso.onView(withId(R.id.description)).check(matches(withText("1. Preheat the oven to 350\u00b0F. Grease the bottom of a 9-inch round springform pan with butter. ")));
     }
 
     @Test
     public void checkRecyclerViewClickAction_CheesecakeStepThree() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
-        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
         Espresso.onView(withId(R.id.description)).check(matches(withText("3. Fill a large roasting pan with a few inches of hot water and place it on the bottom rack of the oven.")));
     }
 
