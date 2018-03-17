@@ -16,8 +16,37 @@
         android:paddingRight="@dimen/item_step_parent_horizontal_padding"
         android:paddingLeft="@dimen/item_step_parent_horizontal_padding">
 
+        <TextView
+            android:id="@+id/image_header"
+            style="@style/StepHeaderTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/image_header" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@null"
+            android:layout_marginBottom="@dimen/item_video_bottom_margin" />
+
+        <TextView
+            android:id="@+id/image_error"
+            style="@style/StepErrorTheme"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_error_height"
+            android:text="@string/image_error"/>
+
+        <TextView
+            android:id="@+id/video_header"
+            style="@style/StepHeaderTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/video_header" />
+
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/exoplayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,24 +54,18 @@
             android:layout_marginBottom="@dimen/item_video_bottom_margin" />
 
         <TextView
-            android:id="@+id/no_video_view"
+            android:id="@+id/video_error"
+            style="@style/StepErrorTheme"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_no_video_height"
-            android:text="@string/no_video_text"
-            android:textSize="@dimen/item_no_video_text_size"
-            android:gravity="center"
-            android:visibility="gone" />
+            android:layout_height="@dimen/item_error_height"
+            android:text="@string/video_error" />
 
         <TextView
             android:id="@+id/description_header"
+            style="@style/StepHeaderTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/description_header"
-            android:textSize="@dimen/item_details_header_text_size"
-            android:textStyle="bold"
-            android:gravity="start"
-            android:paddingRight="@dimen/item_step_horizontal_padding"
-            android:paddingLeft="@dimen/item_step_horizontal_padding" />
+            android:text="@string/description_header" />
 
         <TextView
             android:id="@+id/description"
@@ -50,7 +73,6 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/item_step_text_size"
             android:gravity="start"
-            android:paddingTop="@dimen/item_step_vertical_padding"
             android:paddingBottom="@dimen/item_step_vertical_padding"
             android:paddingRight="@dimen/item_step_horizontal_padding"
             android:paddingLeft="@dimen/item_step_horizontal_padding" />

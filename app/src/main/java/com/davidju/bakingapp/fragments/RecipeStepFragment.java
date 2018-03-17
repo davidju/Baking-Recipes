@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +58,12 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
     @BindView(R.id.scroll_view) ScrollView scrollView;
+    @BindView(R.id.image_header) TextView imageHeader;
+    @BindView(R.id.image) ImageView image;
+    @BindView(R.id.image_error) TextView imageError;
+    @BindView(R.id.video_header) TextView videoHeader;
     @BindView(R.id.exoplayer) SimpleExoPlayerView exoPlayerView;
-    @BindView(R.id.no_video_view) TextView noVideoView;
+    @BindView(R.id.video_error) TextView videoError;
     @BindView(R.id.description) TextView description;
 
     @Nullable @Override
@@ -66,13 +73,31 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
 
         Step step = getArguments().getParcelable("step");
 
+        String thumbnailUrl = step.getThumbnailUrl();
+        if (!thumbnailUrl.isEmpty()) {
+            Picasso.with(getContext())
+                    .load(thumbnailUrl)
+                    .into(image, new Callback() {
+                        @Override
+                        public void onSuccess() {}
+                        @Override
+                        public void onError() {
+                            image.setVisibility(View.GONE);
+                            imageError.setVisibility(View.VISIBLE);
+                        }
+                    });
+        } else {
+            imageHeader.setVisibility(View.GONE);
+            image.setVisibility(View.GONE);
+        }
+
         String videoUrl = step.getVideoUrl();
         if (!videoUrl.isEmpty()) {
             initializeMediaSession();
             initializePlayer(Uri.parse(videoUrl));
         } else {
+            videoHeader.setVisibility(View.GONE);
             exoPlayerView.setVisibility(View.GONE);
-            noVideoView.setVisibility(View.VISIBLE);
         }
         description.setText(step.getDescription());
 
@@ -143,13 +168,19 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         }
     }
 
+    private void releaseMediaSession() {
+        if (mediaSession != null) {
+            mediaSession.setActive(false);
+            mediaSession.release();
+            mediaSession = null;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         releasePlayer();
-        if (mediaSession != null) {
-            mediaSession.setActive(false);
-        }
+        releaseMediaSession();
         unbinder.unbind();
     }
 
@@ -183,7 +214,11 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     }
 
     @Override
-    public void onPlayerError(ExoPlaybackException error) {}
+    public void onPlayerError(ExoPlaybackException error) {
+        Log.d(TAG, "exoplayer error: " + error.getMessage());
+        exoPlayerView.setVisibility(View.GONE);
+        videoError.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onPositionDiscontinuity() {}
