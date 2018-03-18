@@ -57,6 +57,9 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     private SimpleExoPlayer exoPlayer;
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
+    private String videoUrl;
+    private long playerPosition = 0;
+    private boolean playState = true;
     @BindView(R.id.scroll_view) ScrollView scrollView;
     @BindView(R.id.image_header) TextView imageHeader;
     @BindView(R.id.image) ImageView image;
@@ -91,17 +94,23 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
             image.setVisibility(View.GONE);
         }
 
-        String videoUrl = step.getVideoUrl();
-        if (!videoUrl.isEmpty()) {
-            initializeMediaSession();
-            initializePlayer(Uri.parse(videoUrl));
-        } else {
+        videoUrl = step.getVideoUrl();
+        if (videoUrl.isEmpty()) {
             videoHeader.setVisibility(View.GONE);
             exoPlayerView.setVisibility(View.GONE);
         }
         description.setText(step.getDescription());
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!videoUrl.isEmpty()) {
+            initializeMediaSession();
+            initializePlayer(Uri.parse(videoUrl));
+        }
     }
 
     @Override
@@ -122,9 +131,8 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
             scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
                     savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
             if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
-                long playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
-                exoPlayer.seekTo(playerPosition);
-                exoPlayer.setPlayWhenReady(savedInstanceState.getBoolean(KEY_PLAYER_PLAY_STATE));
+                playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
+                playState = savedInstanceState.getBoolean(KEY_PLAYER_PLAY_STATE);
             }
         }
     }
@@ -143,7 +151,8 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, dataSourceFactory,
                     new DefaultExtractorsFactory(), null, null);
             exoPlayer.prepare(mediaSource);
-            exoPlayer.setPlayWhenReady(true);
+            exoPlayer.seekTo(playerPosition);
+            exoPlayer.setPlayWhenReady(playState);
         }
     }
 
@@ -177,10 +186,19 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onStop() {
+        super.onStop();
+        if (exoPlayer != null) {
+            playState = exoPlayer.getPlayWhenReady();
+            playerPosition = exoPlayer.getCurrentPosition();
+        }
         releasePlayer();
         releaseMediaSession();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         unbinder.unbind();
     }
 
