@@ -85,8 +85,10 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
                         public void onSuccess() {}
                         @Override
                         public void onError() {
-                            image.setVisibility(View.GONE);
-                            imageError.setVisibility(View.VISIBLE);
+                            if (image != null && imageError != null) {
+                                image.setVisibility(View.GONE);
+                                imageError.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
         } else {
