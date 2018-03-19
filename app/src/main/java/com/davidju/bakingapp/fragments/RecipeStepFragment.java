@@ -73,6 +73,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        Log.i(TAG, "onCreateView");
 
         Step step = getArguments().getParcelable("step");
 
@@ -109,6 +110,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onStart() {
         super.onStart();
+        Log.i(TAG, "onStart");
         // Initialize player to account for split screen mode in API 24 and above
         if (Util.SDK_INT > 23 && !videoUrl.isEmpty()) {
             initializeMediaSession();
@@ -119,6 +121,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume");
         // If below API 24, wait as long as possible before grabbing resources
         if (Util.SDK_INT <= 23 && !videoUrl.isEmpty()) {
             initializeMediaSession();
@@ -129,9 +132,11 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSavedInstanceState");
         outState.putInt(KEY_SCROLL_X_POSITION, scrollView.getScrollX());
         outState.putInt(KEY_SCROLL_Y_POSITION, scrollView.getScrollY());
         if (exoPlayer != null) {
+            Log.i(TAG, "storing exoplayer");
             outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
             outState.putBoolean(KEY_PLAYER_PLAY_STATE, exoPlayer.getPlayWhenReady());
         }
@@ -140,10 +145,12 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+        Log.i(TAG, "onViewStateRestored");
         if (savedInstanceState != null) {
             scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
                     savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
             if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
+                Log.i(TAG, "retrieving exoplayer");
                 playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
                 playState = savedInstanceState.getBoolean(KEY_PLAYER_PLAY_STATE);
             }
@@ -201,6 +208,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onPause() {
         super.onPause();
+        Log.i(TAG, "onPause");
         // No guarantee that onStop() is called for below API 24, so release resources as soon as possible
         if (Util.SDK_INT <= 23) {
             if (exoPlayer != null) {
@@ -215,6 +223,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onStop() {
         super.onStop();
+        Log.i(TAG, "onStop");
         // Delay releasing resources to account for multi/split window mode
         if (Util.SDK_INT > 23) {
             if (exoPlayer != null) {
@@ -229,6 +238,7 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.i(TAG, "onDestroyView");
         unbinder.unbind();
     }
 
