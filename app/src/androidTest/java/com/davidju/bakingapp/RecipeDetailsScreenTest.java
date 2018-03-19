@@ -36,6 +36,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_NutellaPieStepOne() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(0));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
@@ -44,6 +45,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_NutellaPieStepThree() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(0));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(6));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
@@ -52,6 +54,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_BrowniesStepThree() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(1));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(6));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
@@ -60,6 +63,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_BrowniesStepFour() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(1));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(7));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(7, click()));
@@ -68,6 +72,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_YellowCakeStepThree() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(2));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(6));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
@@ -76,6 +81,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_YellowCakeStepFive() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(2));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(8));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(8, click()));
@@ -84,6 +90,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_CheesecakeStepOne() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(3));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(4, click()));
@@ -92,6 +99,7 @@ public class RecipeDetailsScreenTest {
 
     @Test
     public void checkRecyclerViewClickAction_CheesecakeStepThree() {
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(3));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(6));
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(6, click()));
