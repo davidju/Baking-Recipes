@@ -1,6 +1,8 @@
 package com.davidju.bakingapp.fragments;
 
 import android.arch.lifecycle.Lifecycle;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,6 +51,7 @@ import butterknife.Unbinder;
 public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private static final String TAG = RecipeStepFragment.class.getSimpleName();
+    private static final String KEY_EXOPLAYER_PREFERENCES = "exoplayer_preferences";
     private static final String KEY_SCROLL_X_POSITION = "scroll_x_position";
     private static final String KEY_SCROLL_Y_POSITION = "scroll_y_position";
     private static final String KEY_PLAYER_POSITION = "exoplayer_position";
@@ -108,6 +111,29 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.i(TAG, "onViewStateRestored");
+        if (savedInstanceState != null) {
+            scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
+                    savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
+            // Retrieve exoplayer state depending on where the state is stored in accordance to the
+            // device's API level
+            if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
+                playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
+                playState = savedInstanceState.getBoolean(KEY_PLAYER_PLAY_STATE);
+            } else {
+                SharedPreferences settings = getContext().getSharedPreferences(KEY_EXOPLAYER_PREFERENCES, Context.MODE_PRIVATE);
+                playState = settings.getBoolean(KEY_PLAYER_PLAY_STATE, true);
+                playerPosition = settings.getLong(KEY_PLAYER_POSITION, 0L);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+                editor.commit();
+            }
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         Log.i(TAG, "onStart");
@@ -126,34 +152,6 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         if (Util.SDK_INT <= 23 && !videoUrl.isEmpty()) {
             initializeMediaSession();
             initializePlayer(Uri.parse(videoUrl));
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.i(TAG, "onSavedInstanceState");
-        outState.putInt(KEY_SCROLL_X_POSITION, scrollView.getScrollX());
-        outState.putInt(KEY_SCROLL_Y_POSITION, scrollView.getScrollY());
-        if (exoPlayer != null) {
-            Log.i(TAG, "storing exoplayer");
-            outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
-            outState.putBoolean(KEY_PLAYER_PLAY_STATE, exoPlayer.getPlayWhenReady());
-        }
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.i(TAG, "onViewStateRestored");
-        if (savedInstanceState != null) {
-            scrollView.post(() -> scrollView.scrollTo(savedInstanceState.getInt(KEY_SCROLL_X_POSITION),
-                    savedInstanceState.getInt(KEY_SCROLL_Y_POSITION)));
-            if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
-                Log.i(TAG, "retrieving exoplayer");
-                playerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
-                playState = savedInstanceState.getBoolean(KEY_PLAYER_PLAY_STATE);
-            }
         }
     }
 
@@ -189,22 +187,6 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         mediaSession.setActive(true);
     }
 
-    private void releasePlayer() {
-        if (exoPlayer != null) {
-            exoPlayer.stop();
-            exoPlayer.release();
-            exoPlayer = null;
-        }
-    }
-
-    private void releaseMediaSession() {
-        if (mediaSession != null) {
-            mediaSession.setActive(false);
-            mediaSession.release();
-            mediaSession = null;
-        }
-    }
-
     @Override
     public void onPause() {
         super.onPause();
@@ -212,11 +194,33 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         // No guarantee that onStop() is called for below API 24, so release resources as soon as possible
         if (Util.SDK_INT <= 23) {
             if (exoPlayer != null) {
+                // Store exoplayer state in SharedPreferences, since exoplayer resources will be released
+                // before onSaveInstanceState is called
+                SharedPreferences settings = getContext().getSharedPreferences(KEY_EXOPLAYER_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
                 playState = exoPlayer.getPlayWhenReady();
+                editor.putBoolean(KEY_PLAYER_PLAY_STATE, playState);
                 playerPosition = exoPlayer.getCurrentPosition();
+                editor.putLong(KEY_PLAYER_POSITION, playerPosition);
+                editor.commit();
             }
+
             releasePlayer();
             releaseMediaSession();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSavedInstanceState");
+        outState.putInt(KEY_SCROLL_X_POSITION, scrollView.getScrollX());
+        outState.putInt(KEY_SCROLL_Y_POSITION, scrollView.getScrollY());
+        // If API is below 24, exoplayer state is already stored during onPause
+        if (exoPlayer != null && Util.SDK_INT > 23) {
+            Log.i(TAG, "storing exoplayer");
+            outState.putLong(KEY_PLAYER_POSITION, exoPlayer.getCurrentPosition());
+            outState.putBoolean(KEY_PLAYER_PLAY_STATE, exoPlayer.getPlayWhenReady());
         }
     }
 
@@ -240,6 +244,22 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
         super.onDestroyView();
         Log.i(TAG, "onDestroyView");
         unbinder.unbind();
+    }
+
+    private void releasePlayer() {
+        if (exoPlayer != null) {
+            exoPlayer.stop();
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+    }
+
+    private void releaseMediaSession() {
+        if (mediaSession != null) {
+            mediaSession.setActive(false);
+            mediaSession.release();
+            mediaSession = null;
+        }
     }
 
     @Override
