@@ -109,7 +109,18 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onStart() {
         super.onStart();
-        if (!videoUrl.isEmpty()) {
+        // Initialize player to account for split screen mode in API 24 and above
+        if (Util.SDK_INT > 23 && !videoUrl.isEmpty()) {
+            initializeMediaSession();
+            initializePlayer(Uri.parse(videoUrl));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // If below API 24, wait as long as possible before grabbing resources
+        if (Util.SDK_INT <= 23 && !videoUrl.isEmpty()) {
             initializeMediaSession();
             initializePlayer(Uri.parse(videoUrl));
         }
@@ -188,14 +199,31 @@ public class RecipeStepFragment extends Fragment implements ExoPlayer.EventListe
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        // No guarantee that onStop() is called for below API 24, so release resources as soon as possible
+        if (Util.SDK_INT <= 23) {
+            if (exoPlayer != null) {
+                playState = exoPlayer.getPlayWhenReady();
+                playerPosition = exoPlayer.getCurrentPosition();
+            }
+            releasePlayer();
+            releaseMediaSession();
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        if (exoPlayer != null) {
-            playState = exoPlayer.getPlayWhenReady();
-            playerPosition = exoPlayer.getCurrentPosition();
+        // Delay releasing resources to account for multi/split window mode
+        if (Util.SDK_INT > 23) {
+            if (exoPlayer != null) {
+                playState = exoPlayer.getPlayWhenReady();
+                playerPosition = exoPlayer.getCurrentPosition();
+            }
+            releasePlayer();
+            releaseMediaSession();
         }
-        releasePlayer();
-        releaseMediaSession();
     }
 
     @Override
