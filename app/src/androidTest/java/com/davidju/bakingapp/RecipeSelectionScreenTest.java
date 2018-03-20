@@ -53,8 +53,10 @@ public class RecipeSelectionScreenTest {
     public void checkRecyclerViewClickAction_NutellaPie() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Nutella Pie")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Prep the cookie crust.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(4)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(5));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(5)).check(matches(withText("2. Prep the cookie crust.")));
     }
 
     /* Verifies that selecting the Brownies recipe leads to the correct view containing the expected data. */
@@ -62,8 +64,10 @@ public class RecipeSelectionScreenTest {
     public void checkRecyclerViewClickAction_Brownies() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Brownies")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Melt butter and bittersweet chocolate.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(4)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(5));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(5)).check(matches(withText("2. Melt butter and bittersweet chocolate.")));
     }
 
     /* Verifies that selecting the Yellow Cake recipe leads to the correct view containing the expected data. */
@@ -71,8 +75,10 @@ public class RecipeSelectionScreenTest {
     public void checkRecyclerViewClickAction_YellowCake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Yellow Cake")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Combine dry ingredients.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(4)).check(matches(withText("1. Starting prep")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(5));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(5)).check(matches(withText("2. Combine dry ingredients.")));
     }
 
     /* Verifies that selecting the Cheesecake recipe leads to the correct view containing the expected data. */
@@ -80,8 +86,10 @@ public class RecipeSelectionScreenTest {
     public void checkRecyclerViewClickAction_Cheesecake() {
         Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
         Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(0)).check(matches(withText("Cheesecake")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(3, R.id.step)).check(matches(withText("1. Starting prep.")));
-        Espresso.onView(withRecyclerView(R.id.recycler_view).atPositionOnView(4, R.id.step)).check(matches(withText("2. Prep the cookie crust.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(4)).check(matches(withText("1. Starting prep.")));
+        Espresso.onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.scrollToPosition(5));
+        Espresso.onView(withRecyclerView(R.id.recycler_view).atPosition(5)).check(matches(withText("2. Prep the cookie crust.")));
     }
 
     @After
